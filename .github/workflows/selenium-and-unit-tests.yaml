@@ -43,8 +43,7 @@ jobs:
 
     - name: Run Tests with Coverage
       run: |
-        cd tests
-        coverage run -m unittest discover
+        coverage run -m unittest discover -s tests/ -p "*_tests.py"
         coverage report -m
         # Opcional: Gerar relatório HTML
         # coverage html
