@@ -1,4 +1,4 @@
-name: Selenium Tests and Unit Tests with Coverage
+name: Selenium Tests and Unit Tests
 
 on:
   push:
@@ -29,12 +29,10 @@ jobs:
           sudo apt-get install xvfb
         fi
 
-    - name: Install dependencies and coverage
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flask
-        pip install pytest
-        pip install coverage
+        pip install -r requirements.txt
 
     - name: Start Flask Application
       run: |
@@ -43,17 +41,7 @@ jobs:
     - name: Wait for Flask to start
       run: sleep 5
 
-    - name: Run Tests with Coverage
+    - name: Run Tests
       run: |
-        coverage run -m pytest tests/selenium_tests.py
-        coverage run -m pytest tests/unit_tests.py
-
-    - name: Generate Coverage Report
-      run: |
-        coverage xml -o coverage.xml
-
-    - name: Upload Coverage Report
-      uses: actions/upload-artifact@v2
-      with:
-        name: coverage
-        path: coverage.xml
+        python tests/selenium_tests.py
+        python tests/unit_tests.py
